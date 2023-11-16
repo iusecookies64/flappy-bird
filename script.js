@@ -1,3 +1,9 @@
+// getting page height and width
+let pageH = Number.parseInt(document.documentElement.clientHeight);
+let pageW = Number.parseInt(document.documentElement.clientWidth);
+
+// game container
+let container = document.getElementById("container");
 // setting up html canvas
 let canvasEl = document.getElementById("canvas1");
 let canvasEl2 = document.getElementById("canvas2");
@@ -13,11 +19,20 @@ background.src = "./assets/flappybirdbg.png" ;
 let canvasHeight;
 let canvasWidth;
 
+let factor = 1;
+
 
 background.onload = function() {
+    // setting up factor by which each thing will reduce if screen is small
+    if(pageW < background.naturalWidth) factor = pageW / background.naturalWidth;
+
     // setting up values for canvas height and width
-    canvasHeight = background.naturalHeight * 1.2;
-    canvasWidth = background.naturalWidth * 1.4;
+    canvasHeight = background.naturalHeight * 1.2 * factor;
+    canvasWidth = background.naturalWidth * 1.4 * factor;
+    
+    // resizing container
+    container.style.minHeight = `${canvasHeight}px`;
+    container.style.minWidth = `${canvasWidth}px`;
 
     // resizing canvas element
     canvasEl.height = canvasHeight;
@@ -31,14 +46,6 @@ background.onload = function() {
     itemsLoaded++;
 };
 
-
-// setting up floor image
-let floorImg = new Image();
-floorImg.src = "./assets/floor.png";
-floorImg.onload = function() {
-    
-}
-
 // getting bird image
 let bird;
 let defaultBird;
@@ -49,11 +56,11 @@ birdImg.onload = function() {
     bird = {
         x: canvasWidth/8,
         y: canvasHeight/2,
-        jumpSpeed: -7,
-        gravity: 0.4,
+        jumpSpeed: -7 * factor,
+        gravity: 0.4 * factor,
         velocityY: 0,
-        width: birdImg.naturalWidth / 7,
-        height: birdImg.naturalHeight / 7,
+        width: (birdImg.naturalWidth / 7) * factor,
+        height: (birdImg.naturalHeight / 7) * factor,
     };
     defaultBird = {
         x: bird.x,
@@ -69,7 +76,7 @@ birdImg.onload = function() {
 // Pipes stores pipes and their property
 let pipeList = new LinkedList();
 let pipeProperties = {
-    speedX: -3,
+    speedX: -3 * factor,
 }
 
 
@@ -80,8 +87,8 @@ topPipeImg.src = './assets/toppipe.png';
 bottomPipeImg.src = './assets/bottompipe.png';
 
 topPipeImg.onload = function() {
-    pipeProperties.height = topPipeImg.naturalHeight / 5;
-    pipeProperties.width = topPipeImg.naturalWidth / 4;
+    pipeProperties.height = (topPipeImg.naturalHeight / 5) * factor;
+    pipeProperties.width = (topPipeImg.naturalWidth / 4) * factor;
     pipeProperties.gap = canvasHeight / 5;
 
     // item loaded
@@ -161,7 +168,7 @@ function update()
     }
 
     // drawing score
-    context.font = "50px Arial";
+    context.font = `${50 * factor}px Arial`;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";
     context.fillText(`${score}`, canvasWidth/2, canvasHeight/8);
@@ -234,7 +241,7 @@ function resetGame() {
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     // showing final score
-    context.font = "50px Arial";
+    context.font = `${50 * factor}px Arial`;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";
     context.fillText(`Final Score: ${score}`, canvasWidth/2, canvasHeight/8);
@@ -242,7 +249,7 @@ function resetGame() {
 
     // showing highest score
     if(score > highestScore) highestScore = score;
-    context.font = "25px Arial";
+    context.font = `${25 * factor}px Arial`;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";
     context.fillText(`Highest Score: ${highestScore}`, canvasWidth/2, canvasHeight/4);
@@ -263,6 +270,9 @@ function resetGame() {
 
 // adding buttons
 var startBtn = document.getElementById('start-button');
+// setting up start btn size
+startBtn.height = startBtn.getBoundingClientRect().clientHeight * factor;
+startBtn.width = startBtn.getBoundingClientRect().clientWidth * factor;
 let temp = setInterval(function()
 {
     if(itemsLoaded == 4)

@@ -10,10 +10,15 @@
 }
 
 body {
-  height: 100vh;
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: relative;
   background-size: cover;
   background-position: center;
+  background-image: url('./assets/bg.png');
 }
 
 .background {
@@ -22,7 +27,7 @@ body {
   left: 0;
   height: 100%;
   width: 100%;
-  background-color: #71c5cf;
+  background-color: #000000;
   background-image: url('assets/bg.png');
 }
 
@@ -37,19 +42,14 @@ body {
   backdrop-filter: blur(3px);
 }
 
-.container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+.container{
+  position: relative;
 }
 
 .container canvas {
-  box-shadow: 0 3px 10px rgb(255, 255, 255);
-  border: .5px solid rgb(0, 0, 0);
-  border-radius: 20px;
   position: absolute;
-  transform: translate(-50%, -50%);
+  top: 0;
+  left: 0;
 }
 
 #canvas1 {
@@ -62,12 +62,12 @@ body {
   background-image: url("./assets/floor.png");
   background-position: bottom;
   background-repeat: no-repeat;
-  background-size: 150%; 
+  background-size: 150%;
 }
 
 
 .start-button {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
