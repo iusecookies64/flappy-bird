@@ -1,0 +1,87 @@
+*{
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  padding: 0;
+  border: none;
+  box-sizing: border-box;
+  -webkit-user-select: none; 
+  -ms-user-select: none; 
+  user-select: none; 
+}
+
+body {
+  height: 100vh;
+  position: relative;
+  background-size: cover;
+  background-position: center;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #71c5cf;
+  background-image: url('assets/bg.png');
+}
+
+.background::after {
+  content: "";
+  position: absolute;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  backdrop-filter: blur(3px);
+}
+
+.container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.container canvas {
+  box-shadow: 0 3px 10px rgb(255, 255, 255);
+  border: .5px solid rgb(0, 0, 0);
+  border-radius: 20px;
+  position: absolute;
+  transform: translate(-50%, -50%);
+}
+
+#canvas1 {
+  background-image: url("./assets/flappybirdbg.png");
+  background-position: bottom;
+  background-size: 150%;
+}
+
+#canvas2 {
+  background-image: url("./assets/floor.png");
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-size: 150%; 
+}
+
+
+.start-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 60px;
+  width: 183px;
+  background-image: url("./assets/start-button.png");
+  background-size: contain;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+}
+
+.start-button:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  cursor: pointer;
+}
