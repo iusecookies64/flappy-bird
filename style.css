@@ -18,30 +18,8 @@ body {
   position: relative;
   background-size: cover;
   background-position: center;
-  background-image: url('./assets/bg.png');
+  background-image: linear-gradient(to bottom right, rgb(61, 61, 61), rgb(17, 17, 17), rgb(61, 61, 61));
 }
-
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background-color: #000000;
-  background-image: url('assets/bg.png');
-}
-
-.background::after {
-  content: "";
-  position: absolute;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  backdrop-filter: blur(3px);
-}
-
 .container{
   position: relative;
 }
@@ -53,18 +31,59 @@ body {
 }
 
 #canvas1 {
-  background-image: url("./assets/flappybirdbg.png");
   background-position: bottom;
-  background-size: 150%;
+  background-size: contain;
 }
 
 #canvas2 {
-  background-image: url("./assets/floor.png");
   background-position: bottom;
   background-repeat: no-repeat;
-  background-size: 150%;
+  background-size: contain;
 }
 
+#options-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  background-image: linear-gradient(to bottom right, rgba(0, 81, 255, 0.3), rgba(255, 0, 0, 0.3));
+  backdrop-filter: blur(5px);
+}
+
+#options-container div {
+  height: 25%;
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0.5px white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  color: white;
+  background-size: cover;
+  background-position: bottom;
+}
+
+#options-container div:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 10px 3px white;
+  cursor: pointer;
+}
+
+#default {
+  background-image: url('./assets/default/flappybirdbg.png');
+}
+#alien {
+  background-image: url('./assets/alien/flappybirdbg.png');
+}
+#night {
+  background-image: url('./assets/night/flappybirdbg.png');
+}
 
 .start-button {
   position: fixed;
@@ -82,6 +101,29 @@ body {
 }
 
 .start-button:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  cursor: pointer;
+}
+
+#theme-button {
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 60px;
+  width: 183px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: 700;
+  background-image: linear-gradient(to bottom right, darkgreen, darkblue);
+}
+
+#theme-button:hover {
   transform: translate(-50%, -50%) scale(1.05);
   cursor: pointer;
 }

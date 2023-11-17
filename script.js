@@ -2,6 +2,7 @@
 let pageH = Number.parseInt(document.documentElement.clientHeight);
 let pageW = Number.parseInt(document.documentElement.clientWidth);
 
+
 // game container
 let container = document.getElementById("container");
 // setting up html canvas
@@ -14,14 +15,18 @@ let context2 = canvasEl2.getContext('2d');
 let itemsLoaded = 0, score = 0, highestScore = 0;
 
 // setting up the background image
+canvasEl.style.backgroundImage = `url(${modes[currMode].backgroundPath})`;
+canvasEl2.style.backgroundImage = `url(${modes[currMode].floorPath})`;
+
+// getting background Image for dimesions
 let background = new Image();
-background.src = "./assets/flappybirdbg.png" ;
+background.src = `./assets/${currMode}/flappybirdbg.png` ;
 let canvasHeight;
 let canvasWidth;
 
 let factor = 1;
 
-
+// getting and setting background for background canvas
 background.onload = function() {
     // setting up factor by which each thing will reduce if screen is small
     if(pageW < background.naturalWidth) factor = pageW / background.naturalWidth;
@@ -39,6 +44,8 @@ background.onload = function() {
     canvasEl.width = canvasWidth;
     canvasEl2.height = canvasHeight;
     canvasEl2.width = canvasWidth;
+
+    // getting canvas top position coordinated
     canvasX = canvasEl.getBoundingClientRect().left;
     canvasY = canvasEl.getBoundingClientRect().top;
 
@@ -46,11 +53,14 @@ background.onload = function() {
     itemsLoaded++;
 };
 
+
+
 // getting bird image
 let bird;
 let defaultBird;
 let birdImg = new Image();
-birdImg.src = "./assets/flappybird.png";
+birdImg.src = modes[currMode].birdPath;
+let birdHeadLightGradient;
 
 birdImg.onload = function() {
     bird = {
@@ -67,6 +77,9 @@ birdImg.onload = function() {
         y: bird.y,
         velocityY: 0
     }
+    birdHeadLightGradient = context.createLinearGradient(bird.x, bird.y, canvasEl.width, bird.y);
+    birdHeadLightGradient.addColorStop(0, "rgba(255, 255, 0, 0.4)")
+    birdHeadLightGradient.addColorStop(1, "rgba(255, 255, 255, 0)")
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
     // item loaded
     itemsLoaded++;
@@ -83,8 +96,8 @@ let pipeProperties = {
 // getting obstacle
 let topPipeImg = new Image();
 let bottomPipeImg = new Image();
-topPipeImg.src = './assets/toppipe.png';
-bottomPipeImg.src = './assets/bottompipe.png';
+topPipeImg.src = modes[currMode].topPipePath;
+bottomPipeImg.src = modes[currMode].bottomPipePath;
 
 topPipeImg.onload = function() {
     pipeProperties.height = (topPipeImg.naturalHeight / 5) * factor;
@@ -120,6 +133,19 @@ function makePipe() {
 }
 
 
+function drawHeadLight(x, y, context)
+{
+    console.log("gg");
+    context.beginPath();
+    context.moveTo(x, y);
+    context.lineTo(canvasEl.width, y + 100);
+    context.lineTo(canvasEl.width, y - 100);
+    context.lineTo(x, y);
+    context.fillStyle = birdHeadLightGradient;
+    context.fill();
+    context.closePath();
+}
+
 // function that will update bird and pipes and check for collision
 function update()
 {
@@ -131,6 +157,9 @@ function update()
     bird.velocityY += bird.gravity;
     bird.y = Math.max(bird.y + bird.velocityY, 0);              // so that bird doesn't fly out of map
     context2.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
+
+    // drawing headlight from bird
+    if(modes[currMode].showHeadLight) drawHeadLight(bird.x + bird.width - 20, bird.y + bird.height/2, context2);
 
     // checking first pipe
     let currNode = pipeList.head;
@@ -224,7 +253,7 @@ function gameOver()
 
     // removing bird from game
     context2.clearRect(0, 0, canvasEl.width, canvasEl.height);
-    explode(bird.x + bird.width / 2, bird.y + bird.height / 2, canvasEl.width, canvasEl.height, "yellow", context2);
+    explode(bird.x + bird.width / 2, bird.y + bird.height / 2, canvasEl.width, canvasEl.height, modes[currMode].color1, modes[currMode].color2, context2);
 
     gameOverStatus = true;
     setTimeout(resetGame, 1000);
@@ -260,8 +289,9 @@ function resetGame() {
     // removing all pipes
     pipeList.clear();
 
-    // displaying startGame
+    // displaying buttons
     startBtn.style.display = "flex";
+    selectBtn.style.display = "flex";
 
     gameRunning = false;
     gameOverStatus = false;
@@ -270,6 +300,7 @@ function resetGame() {
 
 // adding buttons
 var startBtn = document.getElementById('start-button');
+var selectBtn = document.getElementById("theme-button");
 // setting up start btn size
 startBtn.height = startBtn.getBoundingClientRect().clientHeight * factor;
 startBtn.width = startBtn.getBoundingClientRect().clientWidth * factor;
@@ -279,14 +310,22 @@ let temp = setInterval(function()
     {
         clearInterval(temp);
         startBtn.style.display = "flex";
+        selectBtn.style.display = "flex";
     }
 }, 500);
 
 startBtn.addEventListener('click', function()
 {
     startBtn.style.display = "none";
+    selectBtn.style.display = "none";
     startGame();
 });
+
+selectBtn.addEventListener('click', function() {
+    startBtn.style.display = "none";
+    selectBtn.style.display = "none";
+    showOptions();
+})
 
 window.addEventListener('click', function(){
     if(gameRunning && !gameOverStatus) bird.velocityY = bird.jumpSpeed;

@@ -1,4 +1,4 @@
-function explode(x, y, canvasWidth, canvasHeight, color, context)
+function explode(x, y, canvasWidth, canvasHeight, color, color2, context)
 {
     let maxSpeed = 2.5;
     let particles = [];
@@ -24,7 +24,7 @@ function explode(x, y, canvasWidth, canvasHeight, color, context)
         {
             let particle = particles[i];
             if(i < 70) context.fillStyle = `${color}`;
-            else context.fillStyle = 'red';
+            else context.fillStyle = color2;
             context.beginPath();
             particle.x += particle.vx;
             particle.y += particle.vy;
