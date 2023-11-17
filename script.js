@@ -1,3 +1,7 @@
+// getting root element size for responsive design
+let rootSize = getComputedStyle(document.getElementById("root")).fontSize;
+rootSize = Number.parseInt(rootSize);
+
 // getting page height and width
 let pageH = Number.parseInt(document.documentElement.clientHeight);
 let pageW = Number.parseInt(document.documentElement.clientWidth);
@@ -5,55 +9,36 @@ let pageW = Number.parseInt(document.documentElement.clientWidth);
 
 // game container
 let container = document.getElementById("container");
-// setting up html canvas
+// getting container dimensions
+let canvasX = container.getBoundingClientRect().left;
+let canvasY = container.getBoundingClientRect().top;
+let canvasHeight = container.getBoundingClientRect().height;
+let canvasWidth = container.getBoundingClientRect().width;
+
+
+// getting up html canvas
 let canvasEl = document.getElementById("canvas1");
 let canvasEl2 = document.getElementById("canvas2");
-let canvasX, canvasY;
 let context = canvasEl.getContext('2d');
 let context2 = canvasEl2.getContext('2d');
 
-let itemsLoaded = 0, score = 0, highestScore = 0;
 
-// setting up the background image
+// setting canvas background image according to theme
 canvasEl.style.backgroundImage = `url(${modes[currMode].backgroundPath})`;
 canvasEl2.style.backgroundImage = `url(${modes[currMode].floorPath})`;
 
-// getting background Image for dimesions
-let background = new Image();
-background.src = `./assets/${currMode}/flappybirdbg.png` ;
-let canvasHeight;
-let canvasWidth;
+
+// setting canvas height width
+canvasEl.height = canvasHeight;
+canvasEl.width = canvasWidth;
+canvasEl2.height = canvasHeight;
+canvasEl2.width = canvasWidth;
+
+
+let itemsLoaded = 0, score = 0, highestScore = 0;
+
 
 let factor = 1;
-
-// getting and setting background for background canvas
-background.onload = function() {
-    // setting up factor by which each thing will reduce if screen is small
-    if(pageW < background.naturalWidth) factor = pageW / background.naturalWidth;
-
-    // setting up values for canvas height and width
-    canvasHeight = background.naturalHeight * 1.2 * factor;
-    canvasWidth = background.naturalWidth * 1.4 * factor;
-    
-    // resizing container
-    container.style.minHeight = `${canvasHeight}px`;
-    container.style.minWidth = `${canvasWidth}px`;
-
-    // resizing canvas element
-    canvasEl.height = canvasHeight;
-    canvasEl.width = canvasWidth;
-    canvasEl2.height = canvasHeight;
-    canvasEl2.width = canvasWidth;
-
-    // getting canvas top position coordinated
-    canvasX = canvasEl.getBoundingClientRect().left;
-    canvasY = canvasEl.getBoundingClientRect().top;
-
-    // item loaded
-    itemsLoaded++;
-};
-
-
 
 // getting bird image
 let bird;
@@ -66,11 +51,11 @@ birdImg.onload = function() {
     bird = {
         x: canvasWidth/8,
         y: canvasHeight/2,
-        jumpSpeed: -7 * factor,
-        gravity: 0.4 * factor,
+        jumpSpeed: -0.4 * rootSize,
+        gravity: 0.025 * rootSize,
         velocityY: 0,
-        width: (birdImg.naturalWidth / 7) * factor,
-        height: (birdImg.naturalHeight / 7) * factor,
+        width: 3.5 * rootSize,
+        height: 2.6 * rootSize,
     };
     defaultBird = {
         x: bird.x,
@@ -89,7 +74,7 @@ birdImg.onload = function() {
 // Pipes stores pipes and their property
 let pipeList = new LinkedList();
 let pipeProperties = {
-    speedX: -3 * factor,
+    speedX: -0.2*rootSize,
 }
 
 
@@ -100,8 +85,8 @@ topPipeImg.src = modes[currMode].topPipePath;
 bottomPipeImg.src = modes[currMode].bottomPipePath;
 
 topPipeImg.onload = function() {
-    pipeProperties.height = (topPipeImg.naturalHeight / 5) * factor;
-    pipeProperties.width = (topPipeImg.naturalWidth / 4) * factor;
+    pipeProperties.height = 38.4 * rootSize;
+    pipeProperties.width = 4.8 * rootSize;
     pipeProperties.gap = canvasHeight / 5;
 
     // item loaded
@@ -117,7 +102,7 @@ function makePipe() {
     let topPipe = {
         img: topPipeImg,
         x: canvasWidth,
-        y: 0 - pipeProperties.height / 3 - Math.floor((Math.random() * pipeProperties.height / 2)),
+        y: 0 - pipeProperties.height / 2 - Math.floor((Math.random() * pipeProperties.height / 3)),
         passed: false,
     }
 
@@ -135,11 +120,10 @@ function makePipe() {
 
 function drawHeadLight(x, y, context)
 {
-    console.log("gg");
     context.beginPath();
     context.moveTo(x, y);
-    context.lineTo(canvasEl.width, y + 100);
-    context.lineTo(canvasEl.width, y - 100);
+    context.lineTo(canvasEl.width, y + 6 * rootSize);
+    context.lineTo(canvasEl.width, y - 6 * rootSize);
     context.lineTo(x, y);
     context.fillStyle = birdHeadLightGradient;
     context.fill();
@@ -156,10 +140,11 @@ function update()
     // drawing bird
     bird.velocityY += bird.gravity;
     bird.y = Math.max(bird.y + bird.velocityY, 0);              // so that bird doesn't fly out of map
+    bird.y = Math.min(bird.y, canvasHeight - bird.height);
     context2.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     // drawing headlight from bird
-    if(modes[currMode].showHeadLight) drawHeadLight(bird.x + bird.width - 20, bird.y + bird.height/2, context2);
+    if(modes[currMode].showHeadLight) drawHeadLight(bird.x + bird.width - rootSize, bird.y + bird.height/2, context2);
 
     // checking first pipe
     let currNode = pipeList.head;
@@ -197,7 +182,7 @@ function update()
     }
 
     // drawing score
-    context.font = `${50 * factor}px Arial`;
+    context.font = `${3 * rootSize}px Arial`;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";
     context.fillText(`${score}`, canvasWidth/2, canvasHeight/8);
@@ -270,7 +255,7 @@ function resetGame() {
     context.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     // showing final score
-    context.font = `${50 * factor}px Arial`;
+    context.font = `${3 * rootSize}px Arial`;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";
     context.fillText(`Final Score: ${score}`, canvasWidth/2, canvasHeight/8);
@@ -278,7 +263,7 @@ function resetGame() {
 
     // showing highest score
     if(score > highestScore) highestScore = score;
-    context.font = `${25 * factor}px Arial`;
+    context.font = `${1.5 * rootSize}px Arial`;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";
     context.fillText(`Highest Score: ${highestScore}`, canvasWidth/2, canvasHeight/4);
@@ -292,6 +277,7 @@ function resetGame() {
     // displaying buttons
     startBtn.style.display = "flex";
     selectBtn.style.display = "flex";
+    btnContainer.style.display = "flex";
 
     gameRunning = false;
     gameOverStatus = false;
@@ -301,16 +287,16 @@ function resetGame() {
 // adding buttons
 var startBtn = document.getElementById('start-button');
 var selectBtn = document.getElementById("theme-button");
-// setting up start btn size
-startBtn.height = startBtn.getBoundingClientRect().clientHeight * factor;
-startBtn.width = startBtn.getBoundingClientRect().clientWidth * factor;
+var btnContainer = document.getElementById("btn-container");
+
 let temp = setInterval(function()
 {
-    if(itemsLoaded == 4)
+    if(itemsLoaded == 3)
     {
         clearInterval(temp);
         startBtn.style.display = "flex";
         selectBtn.style.display = "flex";
+        btnContainer.style.display = "flex";
     }
 }, 500);
 
@@ -318,12 +304,14 @@ startBtn.addEventListener('click', function()
 {
     startBtn.style.display = "none";
     selectBtn.style.display = "none";
+    btnContainer.style.display = "none";
     startGame();
 });
 
 selectBtn.addEventListener('click', function() {
     startBtn.style.display = "none";
     selectBtn.style.display = "none";
+    btnContainer.style.display = "none";
     showOptions();
 })
 
