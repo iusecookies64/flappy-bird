@@ -2,6 +2,7 @@ let optionsContainer = document.getElementById("options-container");
 let defaultContainer = document.getElementById("default");
 let alienContainer = document.getElementById("alien");
 let nightContainer = document.getElementById("night");
+let winterContainer = document.getElementById("winter");
 
 function showOptions()
 {
@@ -20,4 +21,9 @@ nightContainer.addEventListener('click', function() {
     window.localStorage.setItem('selectedTheme', 'night');
     location.reload();
 });
+winterContainer.addEventListener('click', function()
+{
+    window.localStorage.setItem('selectedTheme', 'winter');
+    location.reload();
+})
 

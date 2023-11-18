@@ -36,7 +36,7 @@ canvasEl2.width = canvasWidth;
 
 
 let itemsLoaded = 0, score = 0, highestScore = 0;
-
+if(window.localStorage.highestScore) highestScore = window.localStorage.highestScore;
 
 let factor = 1;
 
@@ -122,8 +122,9 @@ function drawHeadLight(x, y, context)
 {
     context.beginPath();
     context.moveTo(x, y);
-    context.lineTo(canvasEl.width, y + 6 * rootSize);
     context.lineTo(canvasEl.width, y - 6 * rootSize);
+    context.lineTo(canvasEl.width, y + 6 * rootSize);
+    context.lineTo(x, y + rootSize);
     context.lineTo(x, y);
     context.fillStyle = birdHeadLightGradient;
     context.fill();
@@ -144,7 +145,7 @@ function update()
     context2.drawImage(birdImg, bird.x, bird.y, bird.width, bird.height);
 
     // drawing headlight from bird
-    if(modes[currMode].showHeadLight) drawHeadLight(bird.x + bird.width - rootSize, bird.y + bird.height/2, context2);
+    if(modes[currMode].showHeadLight) drawHeadLight(bird.x + 0.6 * bird.width, bird.y, context2);
 
     // checking first pipe
     let currNode = pipeList.head;
@@ -262,7 +263,11 @@ function resetGame() {
     
 
     // showing highest score
-    if(score > highestScore) highestScore = score;
+    if(score > highestScore)
+    {
+        highestScore = score;
+        window.localStorage.setItem("highestScore", highestScore);
+    }
     context.font = `${1.5 * rootSize}px Arial`;
     context.fillStyle = "#ffffff";
     context.textAlign = "center";

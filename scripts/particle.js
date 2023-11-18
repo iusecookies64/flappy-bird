@@ -1,6 +1,7 @@
 function explode(x, y, canvasWidth, canvasHeight, color, color2, context)
 {
     let maxSpeed = 2.5;
+    let gravity = 0.05;
     let particles = [];
     let particleCount = 100;
     let maxRadius = 3;
@@ -26,6 +27,7 @@ function explode(x, y, canvasWidth, canvasHeight, color, color2, context)
             if(i < 70) context.fillStyle = `${color}`;
             else context.fillStyle = color2;
             context.beginPath();
+            particle.vy += gravity;
             particle.x += particle.vx;
             particle.y += particle.vy;
             if(particle.vx > 0) particle.vx -= 0.01;

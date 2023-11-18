@@ -28,6 +28,16 @@ let modes = {
         showHeadLight: true,
         color1: "#cc9706",
         color2: "#8f0c03"
+    },
+    winter: {
+        birdPath: "./assets/winter/flappybird.png",
+        backgroundPath: "./assets/winter/flappybirdbg.png",
+        bottomPipePath: "./assets/winter/bottompipe.png",
+        topPipePath: "./assets/winter/toppipe.png",
+        floorPath: "./assets/winter/floor.png",
+        showHeadLight: false,
+        color1: "#2596be",
+        color2: "#873e23"
     }
 }
 
