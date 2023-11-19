@@ -7,7 +7,8 @@
   -webkit-user-select: none; 
   -ms-user-select: none; 
   user-select: none;
-  touch-action: manipulation;
+  touch-action: none;
+  overflow: hidden;
 }
 
 html {
@@ -131,6 +132,7 @@ body {
   align-items: center;
   height: 10rem;
   width: 12rem;
+  overflow: visible;
 }
 
 #btn-container div {
@@ -146,6 +148,7 @@ body {
   font-weight: 700;
   background-image: linear-gradient(to bottom right, darkgreen, darkblue);
   transition-duration: 0.5s;
+  /* overflow: visible; */
 }
 
 #btn-container div:hover {
