@@ -25,7 +25,8 @@ body {
   background-position: center;
   background-image: linear-gradient(to bottom right, rgb(61, 61, 61), rgb(17, 17, 17), rgb(61, 61, 61));
 }
-.container{
+
+.container {
   position: relative;
   height: 40rem;
   width: 24rem;
@@ -50,7 +51,9 @@ body {
   background-size: contain;
 }
 
-#options-container {
+/* common options styling */
+
+.options-container {
   position: absolute;
   top: 0;
   left: 0;
@@ -66,23 +69,23 @@ body {
   backdrop-filter: blur(5px);
 }
 
-#options-container::-webkit-scrollbar {
+.options-container::-webkit-scrollbar {
   width: 0.2rem;
 }
  
-#options-container::-webkit-scrollbar-track {
+.options-container::-webkit-scrollbar-track {
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
 }
  
-#options-container::-webkit-scrollbar-thumb {
+.options-container::-webkit-scrollbar-thumb {
   background-image: linear-gradient(to bottom, rgb(109, 0, 0), rgb(0, 131, 114));
   border-radius: 2rem;
 }
-#options-container::-webkit-scrollbar-button {
+.options-container::-webkit-scrollbar-button {
   width: 0;
 }
 
-#options-container div {
+.options-container div {
   height: 25%;
   width: 80%;
   border-radius: 1.2rem;
@@ -95,30 +98,113 @@ body {
   background-size: cover;
   background-position: bottom;
   transition-duration: 0.5s;
+  background-image: linear-gradient(to bottom right, darkgreen, darkblue);
+  background-repeat: no-repeat;
+  color: white;
+  text-shadow: 0 0 5px black;
 }
 
-#options-container div:hover {
+.options-container div:hover {
   transform: scale(1.01);
   border: 0.0625rem solid white;
   cursor: pointer;
 }
 
+
+/* select theme options styling */
 #default {
   background-image: url('../assets/default/flappybirdbg.png');
-  color: black;
 }
 #alien {
   background-image: url('../assets/alien/flappybirdbg.png');
-  color: white;
 }
 #night {
   background-image: url('../assets/night/flappybirdbg.png');
-  color: white;
 }
 #winter {
   background-image: url('../assets/winter/flappybirdbg.png');
-  color: black;
 }
+
+
+/* custom options styling */
+#custom-options-container div:nth-child(1) {
+  background-image: linear-gradient(to bottom right, darkgreen, darkblue);
+  height: 10%;
+}
+#custom-options-container div:nth-child(2) {
+  background-image: url("../assets/bird-options.png");
+  background-position: center;
+}
+#custom-options-container div:nth-child(3) {
+  background-image: url("../assets/pipe-options.png");
+}
+#custom-options-container div:nth-child(4) {
+  background-image: url("../assets/background-options.png");
+  font-size: 2rem;
+}
+
+
+/* bird options styling */
+#bird-options-container div {
+  background-size: 40%;
+  background-position: right;
+  justify-content: flex-start;
+}
+#bird-options-container div:nth-child(1) {
+  background-image: url("../assets/default/flappybird.png");
+}
+#bird-options-container div:nth-child(2) {
+  background-image: url("../assets/winter/flappybird.png");
+}
+#bird-options-container div:nth-child(3) {
+  background-image: url("../assets/alien/flappybird.png");
+}
+#bird-options-container div:nth-child(4) {
+  background-image: url("../assets/night/flappybird.png");
+}
+
+
+/* pipe options styling */
+#pipe-options-container div {
+  background-size: 40%;
+  background-position: top right;
+  justify-content: flex-start;
+  border-radius: 0;
+}
+#pipe-options-container div:nth-child(1) {
+  background-image: url('../assets/default/bottompipe.png');
+}
+#pipe-options-container div:nth-child(2) {
+  background-image: url('../assets/winter/bottompipe.png');
+}
+#pipe-options-container div:nth-child(3) {
+  background-image: url('../assets/alien/bottompipe.png');
+}
+#pipe-options-container div:nth-child(4) {
+  background-image: url('../assets/night/bottompipe.png');
+}
+
+/* background options styling */
+#background-options-container div {
+  background-size: 40%;
+  background-position: bottom right;
+  justify-content: flex-start;
+  border-radius: 0;
+}
+
+#background-options-container div:nth-child(1) {
+  background-image: url('../assets/default/flappybirdbg.png');
+}
+#background-options-container div:nth-child(2) {
+  background-image: url('../assets/winter/flappybirdbg.png');
+}
+#background-options-container div:nth-child(3) {
+  background-image: url('../assets/alien/flappybirdbg.png');
+}
+#background-options-container div:nth-child(4) {
+  background-image: url('../assets/night/flappybirdbg.png');
+}
+
 
 #btn-container {
   position: fixed;

@@ -19,8 +19,10 @@ let canvasWidth = container.getBoundingClientRect().width;
 // getting up html canvas
 let canvasEl = document.getElementById("canvas1");
 let canvasEl2 = document.getElementById("canvas2");
+let canvasEl3 = document.getElementById("canvas3");
 let context = canvasEl.getContext('2d');
 let context2 = canvasEl2.getContext('2d');
+let context3 = canvasEl3.getContext('2d');
 
 
 // setting canvas background image according to theme
@@ -33,6 +35,8 @@ canvasEl.height = canvasHeight;
 canvasEl.width = canvasWidth;
 canvasEl2.height = canvasHeight;
 canvasEl2.width = canvasWidth;
+canvasEl3.height = canvasHeight;
+canvasEl3.width = canvasWidth;
 
 
 let itemsLoaded = 0, score = 0, highestScore = 0;
@@ -42,7 +46,7 @@ let factor = 1;
 
 // getting bird image
 let bird;
-let defaultBird;
+let birdDefaultX = canvasWidth/8, birdDefaultY = canvasHeight/2, birdDefaultVelocity = 0;
 let birdImg = new Image();
 birdImg.src = modes[currMode].birdPath;
 let birdHeadLightGradient;
@@ -57,11 +61,7 @@ birdImg.onload = function() {
         width: 3.5 * rootSize,
         height: 2.6 * rootSize,
     };
-    defaultBird = {
-        x: bird.x,
-        y: bird.y,
-        velocityY: 0
-    }
+
     birdHeadLightGradient = context.createLinearGradient(bird.x, bird.y, canvasEl.width, bird.y);
     birdHeadLightGradient.addColorStop(0, "rgba(255, 255, 0, 0.4)")
     birdHeadLightGradient.addColorStop(1, "rgba(255, 255, 255, 0)")
@@ -219,6 +219,15 @@ function detectCollision(pipe)
     return false;
 }
 
+function showFlash(){
+    context3.fillStyle = "white";
+    context3.fillRect(0, 0, canvasWidth, canvasHeight);
+    setTimeout(function()
+    {
+        context3.clearRect(0, 0, canvasWidth, canvasHeight);
+    }, 50);
+}
+
 
 // game state controls
 
@@ -237,19 +246,24 @@ function gameOver()
     clearInterval(gameAnimationId);
     clearInterval(pipeIntervalId);
 
+    // showing flash
+    showFlash();
+
     // removing bird from game
     context2.clearRect(0, 0, canvasEl.width, canvasEl.height);
+
+    // showing explosion
     explode(bird.x + bird.width / 2, bird.y + bird.height / 2, canvasEl.width, canvasEl.height, modes[currMode].color1, modes[currMode].color2, context2);
 
     gameOverStatus = true;
-    setTimeout(resetGame, 1000);
+    setTimeout(resetGame, 1750);
 }
 
 function resetGame() {
     // resetting bird properties
-    bird.x = defaultBird.x;
-    bird.y = defaultBird.y;
-    bird.velocityY = defaultBird.velocityY;
+    bird.x = birdDefaultX;
+    bird.y = birdDefaultY;
+    bird.velocityY = birdDefaultVelocity;
 
     // redrawing bird
     context.clearRect(0, 0, canvasWidth, canvasHeight);

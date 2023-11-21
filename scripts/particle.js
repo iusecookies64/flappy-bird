@@ -1,7 +1,7 @@
 function explode(x, y, canvasWidth, canvasHeight, color, color2, context)
 {
-    let maxSpeed = 2.5;
-    let gravity = 0.05;
+    let maxSpeed = 2;
+    let gravity = 0.025;
     let particles = [];
     let particleCount = 100;
     let maxRadius = 3;
@@ -42,6 +42,6 @@ function explode(x, y, canvasWidth, canvasHeight, color, color2, context)
     setTimeout(function(){
         context.clearRect(0, 0, canvasWidth, canvasHeight);
         clearInterval(animationId)
-    }, 750);
+    }, 1500);
 }
 
