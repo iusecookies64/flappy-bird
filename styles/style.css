@@ -28,7 +28,7 @@ body {
 }
 
 .title {
-  margin-bottom: 1rem;
+  margin: 1rem;
   /* margin-top: 3rem; */
   padding: 1rem;
   width: 24rem;
@@ -263,6 +263,9 @@ body {
 @media screen and (max-height: 780px) {
   html {
     font-size: 14px;
+  }
+  body {
+    justify-content: flex-start;
   }
 }
 
