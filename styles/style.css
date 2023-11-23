@@ -20,10 +20,22 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   position: relative;
   background-size: cover;
   background-position: center;
   background-image: linear-gradient(to bottom right, rgb(61, 61, 61), rgb(17, 17, 17), rgb(61, 61, 61));
+}
+
+.title {
+  margin-bottom: 1rem;
+  /* margin-top: 3rem; */
+  padding: 1rem;
+  width: 24rem;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  border: 2px solid white;
 }
 
 .container {
@@ -88,8 +100,9 @@ body {
 .options-container div {
   height: 25%;
   width: 80%;
-  border-radius: 1.2rem;
+  border: 0.125rem solid white;
   margin-bottom: 1rem;
+  margin-top: 1rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,15 +111,14 @@ body {
   background-size: cover;
   background-position: bottom;
   transition-duration: 0.5s;
-  background-image: linear-gradient(to bottom right, darkgreen, darkblue);
   background-repeat: no-repeat;
   color: white;
   text-shadow: 0 0 5px black;
 }
 
 .options-container div:hover {
+  border: 0.125rem solid white;
   transform: scale(1.01);
-  border: 0.0625rem solid white;
   cursor: pointer;
 }
 
@@ -128,8 +140,9 @@ body {
 
 /* custom options styling */
 #custom-options-container div:nth-child(1) {
-  background-image: linear-gradient(to bottom right, darkgreen, darkblue);
-  height: 10%;
+  /* background-image: linear-gradient(to bottom right, darkgreen, darkblue); */
+  height: 8%;
+  font-size: 2rem;
 }
 #custom-options-container div:nth-child(2) {
   background-image: url("../assets/bird-options.png");
@@ -146,9 +159,10 @@ body {
 
 /* bird options styling */
 #bird-options-container div {
-  background-size: 40%;
-  background-position: right;
+  background-size: 25%;
+  background-position: 13rem center;
   justify-content: flex-start;
+  padding-left: 1rem;
 }
 #bird-options-container div:nth-child(1) {
   background-image: url("../assets/default/flappybird.png");
@@ -166,10 +180,10 @@ body {
 
 /* pipe options styling */
 #pipe-options-container div {
-  background-size: 40%;
-  background-position: top right;
+  background-size: 25%;
+  background-position: 13rem 1rem;
   justify-content: flex-start;
-  border-radius: 0;
+  padding-left: 1rem;
 }
 #pipe-options-container div:nth-child(1) {
   background-image: url('../assets/default/bottompipe.png');
@@ -189,7 +203,7 @@ body {
   background-size: 40%;
   background-position: bottom right;
   justify-content: flex-start;
-  border-radius: 0;
+  padding-left: 1rem;
 }
 
 #background-options-container div:nth-child(1) {
@@ -226,12 +240,11 @@ body {
   display: none;
   justify-content: center;
   align-items: center;
-  border: 0.125rem solid black;
-  border-radius: 10px;
+  border: 0.125rem solid white;
   font-size: 1.2rem;
   color: white;
   font-weight: 700;
-  background-image: linear-gradient(to bottom right, darkgreen, darkblue);
+  /* background-image: linear-gradient(to bottom right, darkgreen, darkblue); */
   transition-duration: 0.5s;
   /* overflow: visible; */
 }
