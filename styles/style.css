@@ -42,6 +42,7 @@ body {
   position: relative;
   height: 40rem;
   width: 24rem;
+  border: 0.125rem solid white;
 }
 
 .container canvas {
