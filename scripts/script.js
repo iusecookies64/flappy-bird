@@ -290,7 +290,7 @@ function resetGame() {
     // resetting score
     score = 0;
 
-    // removing all pipes
+    // removing all pipes and resetting speed
     pipeList.clear();
 
     // displaying buttons
